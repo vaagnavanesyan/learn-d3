@@ -8,6 +8,7 @@ type Slice = {
 const TEXT_COLOR = "white";
 const STROKE_COLOR = "white";
 const TEXT_VALUE_THRESHOLD = 7;
+const PI2 = 2 * Math.PI;
 export const createSVG = (data: Slice[]) => {
   const svg = create("svg").attr("width", 240).attr("height", 240);
   const group = svg.append("g").attr("transform", "translate(120, 120)");
@@ -16,12 +17,13 @@ export const createSVG = (data: Slice[]) => {
 
   const slicesArc = arc<d3.PieArcDatum<Slice>>()
     .outerRadius((_, i) => 120 - i * 5)
-    .innerRadius(45)
-    .padAngle(Math.PI / 180);
+    .startAngle(({ startAngle }) => PI2 - startAngle)
+    .endAngle(({ endAngle }) => PI2 - endAngle)
+    .innerRadius(45);
 
   const textArc = arc<d3.PieArcDatum<Slice>>()
-    .startAngle((d) => d.startAngle - Math.PI / 5)
-    .endAngle((d) => d.endAngle)
+    .startAngle(({ startAngle }) => PI2 - startAngle)
+    .endAngle(({ endAngle }) => PI2 - endAngle)
     .outerRadius(125)
     .innerRadius(25);
 
@@ -32,6 +34,7 @@ export const createSVG = (data: Slice[]) => {
     .append("path")
     .attr("d", slicesArc)
     .attr("stroke", STROKE_COLOR)
+    .attr("stroke-width", "2px")
     .attr("fill", ({ data: { color } }) => color);
 
   group
@@ -50,7 +53,7 @@ export const createSVG = (data: Slice[]) => {
     })
     .attr("font-size", "17px")
     .attr("font-family", "SF Pro Text")
-    .attr("font-weight", '500')
+    .attr("font-weight", "500")
     .attr("fill", TEXT_COLOR);
 
   return svg.node()?.outerHTML ?? "";

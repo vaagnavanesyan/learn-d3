@@ -19,12 +19,12 @@ export const Playground = () => {
         { color: "#B6BCC3", value: 20 },
         { color: "#007AFF", value: 7 },
       ],
+      [{ color: "#B6BCC3", value: 100, showLabel: false }],
       [
         { color: "#9E0C00", value: 80 },
         { color: "#B6BCC3", value: 20 },
       ],
       [{ color: "#9E0C00", value: 100 }],
-      [{ color: "#B6BCC3", value: 100, showLabel: false }],
     ];
 
     ref.current.innerHTML = pieCharts.map(createSVG).join("<br/>");
