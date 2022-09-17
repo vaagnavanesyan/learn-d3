@@ -9,14 +9,17 @@ const TEXT_COLOR = "white";
 const STROKE_COLOR = "white";
 const TEXT_VALUE_THRESHOLD = 7;
 const PI2 = 2 * Math.PI;
+const SIZE = 240;
 export const createSVG = (data: Slice[]) => {
-  const svg = create("svg").attr("width", 240).attr("height", 240);
-  const group = svg.append("g").attr("transform", "translate(120, 120)");
+  const svg = create("svg").attr("width", SIZE).attr("height", SIZE);
+  const group = svg
+    .append("g")
+    .attr("transform", `translate(${SIZE / 2}, ${SIZE / 2})`);
 
   const pieChart = pie<Slice>().value(({ value }) => value);
 
   const slicesArc = arc<d3.PieArcDatum<Slice>>()
-    .outerRadius((_, i) => 120 - i * 5)
+    .outerRadius((_, i) => SIZE / 2 - i * 5)
     .startAngle(({ startAngle }) => PI2 - startAngle)
     .endAngle(({ endAngle }) => PI2 - endAngle)
     .innerRadius(45);
