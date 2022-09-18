@@ -1,4 +1,3 @@
-// https://dev.to/vineethtrv/react-d3-donut-chart-49cm
 import { useEffect, useRef } from "react";
 import { createSVG } from "./create-svg";
 

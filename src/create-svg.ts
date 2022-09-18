@@ -19,16 +19,16 @@ export const createSVG = (data: Slice[]) => {
   const pieChart = pie<Slice>().value(({ value }) => value);
 
   const slicesArc = arc<d3.PieArcDatum<Slice>>()
-    .outerRadius((_, i) => SIZE / 2 - i * 5)
-    .startAngle(({ startAngle }) => PI2 - startAngle)
-    .endAngle(({ endAngle }) => PI2 - endAngle)
-    .innerRadius(45);
+  .startAngle(({ startAngle }) => PI2 - startAngle)
+  .endAngle(({ endAngle }) => PI2 - endAngle)
+  .innerRadius(45)
+  .outerRadius((_, i) => SIZE / 2 - i * 5)
 
   const textArc = arc<d3.PieArcDatum<Slice>>()
     .startAngle(({ startAngle }) => PI2 - startAngle)
     .endAngle(({ endAngle }) => PI2 - endAngle)
-    .outerRadius(125)
-    .innerRadius(25);
+    .innerRadius(45)
+    .outerRadius(SIZE / 2)
 
   group
     .selectAll("path")
@@ -54,6 +54,7 @@ export const createSVG = (data: Slice[]) => {
         ? ""
         : `${value}%`;
     })
+    .style('text-anchor', 'middle')
     .attr("font-size", "17px")
     .attr("font-family", "SF Pro Text")
     .attr("font-weight", "500")
